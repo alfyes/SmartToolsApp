@@ -1,0 +1,23 @@
+<% if !@video.errors.empty? %>
+    <div class = "alert alert-error">
+
+      <ul>
+        <% @video.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+
+    </div>
+<% end %>
+
+<div class = "well">
+  <%= form_for @video, html: { multipart: true } do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :ruta %>
+      <%= f.file_field :ruta %>
+      <%= f.label :tipo %>
+      <%= f.text_field :tipo %>
+      <%= f.submit "Save", class: "btn btn-primary" %>
+  <% end %>
+</div>
