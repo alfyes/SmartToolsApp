@@ -56,3 +56,5 @@ gem 'autoprefixer-rails'
 gem 'bootstrap-sass'
 
 gem 'jquery-rails'
+
+gem 'paperclip'

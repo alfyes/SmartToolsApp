@@ -1,6 +1,6 @@
 class CreateConcursos < ActiveRecord::Migration[5.1]
-  def change
     create_table :concursos do |t|
+      def change
       t.string :name
       t.string :image
       t.string :url

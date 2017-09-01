@@ -7,6 +7,6 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     registrations: 'users/registrations'
   }
-
+  resources :concursos
   root 'home#index'
 end
