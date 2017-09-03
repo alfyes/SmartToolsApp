@@ -8,5 +8,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   resources :concursos
+
+  get '/contests/:urlconcurso', to: 'contests#index', constraints: { urlconcurso: /([a-zA-Z]|\d|_|\-)+/}
   root 'home#index'
 end
