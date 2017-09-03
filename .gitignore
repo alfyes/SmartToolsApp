@@ -26,3 +26,4 @@
 
 # Ingorar los arhvivos de imagenes de concursos
 /public/system/concursos/
+/public/system/videos/

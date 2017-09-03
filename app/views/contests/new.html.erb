@@ -1,0 +1,27 @@
+<% if !@video.errors.empty? %>
+    <div class = "alert alert-error">
+      <ul>
+        <% @video.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+    </div>
+<% end %>
+<div class = "well">
+  <%= form_for @video, html: { multipart: true }, url: '/contests/' + params[:urlconcurso] do |f| %>
+      <%= f.label :firstNameUser %>
+      <%= f.text_field :firstNameUser %>
+      <%= f.label :lastNameUser %>
+      <%= f.text_field :lastNameUser %>
+      <%= f.label :emailUser %>
+      <%= f.email_field :emailUser %>
+      <%= f.label :sin_convertir %>
+      <%= f.file_field :sin_convertir %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :message %>
+      <%= f.text_field :message %>
+
+      <%= f.submit 'Save', class: 'btn btn-primary' %>
+  <% end %>
+</div>
