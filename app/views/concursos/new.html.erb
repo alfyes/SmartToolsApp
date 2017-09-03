@@ -4,22 +4,46 @@
       <% @consurso.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
       <% end %>
+    </ul>
   </div>
 <% end %>
-<div class = "well">
-  <%= form_for @consurso, html: { multipart: true } do |f| %>
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-      <%= f.label :image2 %>
-      <%= f.file_field :image2 %>
-      <%= f.label :url %>
-      <%= f.text_field :url %>
-      <%= f.label :description %>
-      <%= f.text_field :description %>
-      <%= f.label :startDate %>
-      <%= f.datetime_select :startDate %>
-      <%= f.label :endDate %>
-      <%= f.datetime_select :endDate %>
-  <%= f.submit 'Save', class: 'btn btn-primary' %>
-<% end %>
+
+<div class="container-fluid" style="width: 800px; margin: 0 auto;">
+  <h1 class="page-header">Ingresar Concurso</h1>
+  <div class = "well">
+    <%= form_for @consurso, html: { multipart: true } do |f| %>
+        <div class="row col-lg-12">
+          <div class="form-group col-lg-6">
+            <%= f.label :name, 'Nombre' %>
+            <%= f.text_field :name, class: "form-control" %>
+          </div>
+          <div class="form-group col-lg-6">
+            <%= f.label :image2, 'Imagen' %>
+            <%= f.file_field :image2 %>
+          </div>
+        </div>
+        <div class="row col-lg-12">
+          <div class="form-group col-lg-6">
+            <%= f.label :url, 'URL' %>
+            <%= f.text_field :url, class: "form-control" %>
+          </div>
+          <div class="form-group col-lg-6">
+            <%= f.label :description, 'Descripción' %>
+            <%= f.text_field :description, class: "form-control" %>
+          </div>
+        </div>
+        <div class="row col-lg-12">
+          <div class="form-group col-lg-6">
+            <%= f.label :startDate, 'Fecha inicial' %>
+            <%= f.date_select :startDate, {:start_year => Date.current.year, :end_year => 2030}, {class: "form-control date"} %>
+          </div>
+          <div class="form-group col-lg-6">
+            <%= f.label :endDate, 'Fecha final' %>
+            <%= f.date_select :endDate, {:start_year => Date.current.year, :end_year => 2030}, {class: "form-control date"} %>
+          </div>
+        </div>
+        <%= f.submit 'Ingresar', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
 </div>
+

@@ -63,6 +63,10 @@ header h1{
     }
 }
 
+.date{
+    margin-bottom: 2px;
+}
+
 .portfolio-item {
     margin-bottom: 30px;
 }
