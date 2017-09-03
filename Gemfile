@@ -57,4 +57,4 @@ gem 'bootstrap-sass'
 
 gem 'jquery-rails'
 
-gem 'bcrypt', platforms: :ruby
+gem 'paperclip'

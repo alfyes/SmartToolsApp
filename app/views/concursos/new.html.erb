@@ -1,0 +1,25 @@
+<% if !@consurso.errors.empty? %>
+  <div class = "alert alert-error">
+    <ul>
+      <% @consurso.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+      <% end %>
+  </div>
+<% end %>
+<div class = "well">
+  <%= form_for @consurso, html: { multipart: true } do |f| %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      <%= f.label :image2 %>
+      <%= f.file_field :image2 %>
+      <%= f.label :url %>
+      <%= f.text_field :url %>
+      <%= f.label :description %>
+      <%= f.text_field :description %>
+      <%= f.label :startDate %>
+      <%= f.datetime_select :startDate %>
+      <%= f.label :endDate %>
+      <%= f.datetime_select :endDate %>
+  <%= f.submit 'Save', class: 'btn btn-primary' %>
+<% end %>
+</div>
