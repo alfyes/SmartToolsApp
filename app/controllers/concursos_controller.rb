@@ -1,15 +1,17 @@
 class ConcursosController < ApplicationController
+
+  def index
+    @concursos = current_user.concursos
+  end
+
   def new
     @consurso = Concurso.new
   end
 
   def create
-    @consurso = Concurso.new(concurso_params)
-    @usuario = User.new
-    @usuario.id = 1
-    @consurso.user = @usuario
+    @consurso = current_user.concursos.new(concurso_params)
     if @consurso.save
-      redirect_to home_index_path, notice: "The video #{@consurso.name} has been uploaded."
+      redirect_to concursos_path, notice: "The video #{@consurso.name} has been uploaded."
     else
       render 'new'
     end
