@@ -4,6 +4,14 @@ class ConcursosController < ApplicationController
     @concursos = current_user.concursos
   end
 
+  def show
+    begin
+      @concurso =  current_user.concursos.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to concursos_path
+    end
+  end
+
   def new
     @consurso = Concurso.new
   end
