@@ -1,15 +1,81 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>SmartToolsApp</title>
-    <%= csrf_meta_tags %>
+<html lang="en">
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application.js', 'data-turbolinks-track': 'reload' %>
-  </head>
-  <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-    <%= yield %>
-  </body>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SmartToolsApp</title>
+
+  <%= csrf_meta_tag %>
+
+  <!-- Bootstrap core CSS -->
+  <%= stylesheet_link_tag   'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <!-- Custom styles for this template -->
+
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">SmartToolApp</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto navbar-right">
+        <li class="nav-item active">
+          <%= link_to 'Home', home_index_path, class: 'nav-link' %>
+        </li>
+        <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'nav-link' %>
+            </li>
+        <% else %>
+            <li class="nav-item">
+              <%= link_to 'Login', new_user_session_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item">
+              <%= link_to 'Registro', new_user_registration_path, class: 'nav-link' %>
+            </li>
+        <% end %>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+  <!-- Page Heading -->
+  <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
+  <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
+  <div class="pull-right">
+    <% if user_signed_in? %>
+        Bienvenido: <strong><%= current_user.email %></strong>
+    <% end %>
+  </div>
+  <%= yield %>
+
+<!-- /.container -->
+</div>
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Development by: <small>Alfonso de Jesus Ardila & Wilmer Fabian Triana</small></p>
+  </div>
+  <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<%= javascript_include_tag 'application.js', 'data-turbolinks-track': 'reload' %>
+</body>
+
 </html>
+
