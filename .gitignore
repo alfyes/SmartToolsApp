@@ -23,3 +23,6 @@
 .byebug_history
 
 .idea/
+
+# Ingorar los arhvivos de imagenes de concursos
+/public/system/concursos/
