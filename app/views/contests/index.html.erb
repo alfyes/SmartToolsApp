@@ -13,15 +13,27 @@
       </div>
     </div>
     <div class="row">
+      <a href="<%= '/contests/' + @concurso.url + '/new' %>"><img src="/img_upload.png" height="64" width="64" alt=""> Subir video</a>
+    </div>
+    <div class="row">
       <% @concurso.videos.each do |video|  %>
           <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
             <div class="card h-100">
-
+              <div id='myElement<%= video.id%>'>Loading the player...</div>
+              <script type='text/javascript'>
+                jwplayer("myElement<%= video.id%>").setup({
+                    "file": "<%= video.sin_convertir%>"
+                });
+              </script>
               <div class="card-body">
                 <h4 class="card-title">
                   <a href="#"><%= video.name%></a>
                 </h4>
                 <p class="card-text"><%= video.message %></p>
+                <p>Enviado por: <%= video.firstNameUser + ' ' + video.lastNameUser %>
+                <p>E-mail: <%= video.emailUser %>
+
+                </p>
               </div>
             </div>
           </div>
