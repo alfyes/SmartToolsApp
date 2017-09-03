@@ -1,0 +1,34 @@
+<%= form_for @consurso, html: { multipart: true } do |f| %>
+    <div class="row col-lg-12">
+      <div class="form-group col-lg-6">
+        <%= f.label :name, 'Nombre' %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group col-lg-6">
+        <%= f.label :image2, 'Imagen' %>
+        <%= f.file_field :image2 %>
+      </div>
+    </div>
+    <div class="row col-lg-12">
+      <div class="form-group col-lg-6">
+        <%= f.label :url, 'URL' %>
+        <%= f.text_field :url, class: "form-control" %>
+      </div>
+      <div class="form-group col-lg-6">
+        <%= f.label :description, 'Descripción' %>
+        <%= f.text_field :description, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row col-lg-12">
+      <div class="form-group col-lg-6">
+        <%= f.label :startDate, 'Fecha inicial' %>
+        <%= f.date_select :startDate, {:start_year => Date.current.year, :end_year => 2030}, {class: "form-control date"} %>
+      </div>
+      <div class="form-group col-lg-6">
+        <%= f.label :endDate, 'Fecha final' %>
+        <%= f.date_select :endDate, {:start_year => Date.current.year, :end_year => 2030}, {class: "form-control date"} %>
+      </div>
+    </div>
+    <%= f.submit 'Ingresar', class: 'btn btn-primary' %>
+    <%= link_to 'Cancelar', concursos_path, class: 'btn btn-primary' %>
+<% end %>

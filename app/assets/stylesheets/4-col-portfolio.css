@@ -67,6 +67,10 @@ header h1{
     margin-bottom: 2px;
 }
 
+.glyphicon {
+    font-size: 25px;
+}
+
 .portfolio-item {
     margin-bottom: 30px;
 }

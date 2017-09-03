@@ -9,12 +9,18 @@
   <% @concursos.each do |concurso|  %>
     <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
       <div class="card h-100">
-        <a href="#"><img class="card-img-top" src="<%= concurso.image2 %>" alt=""></a>
+        <a href="#"><img class="card-img-top" src="<%= concurso.image2 %>" alt="" width="300px" height="200px"></a>
         <div class="card-body">
           <h4 class="card-title">
-            <a href="#"><%= concurso.name%></a>
+            <%= link_to concurso.name, concurso_path(concurso) %>
           </h4>
           <p class="card-text"><%= concurso.description %></p>
+        </div>
+        <div class="card-footer">
+          <p class="pull-right icons">
+            <%= link_to "<span class='glyphicon glyphicon-edit'></span>".html_safe, edit_concurso_url(concurso) %>
+            <%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe, concurso_path(concurso), method: :delete, data: { confirm: 'Esta seguro de eliminar?' } %>
+          </p>
         </div>
       </div>
     </div>
