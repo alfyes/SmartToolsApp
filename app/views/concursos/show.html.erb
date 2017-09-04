@@ -26,7 +26,7 @@
             <div id='myElement<%= video.id%>'>Loading the player...</div>
             <script type='text/javascript'>
                 jwplayer("myElement<%= video.id%>").setup({
-                    "file": "<%= video.sin_convertir%>"
+                    "file": "<%= video.sin_convertir.url.gsub(/\/original\//, '/convertido/')%>"
                 });
             </script>
             <span class="label label-success">Convertido!</span>
