@@ -1,27 +1,51 @@
+<div class="container">
 <% if !@video.errors.empty? %>
     <div class = "alert alert-error">
       <ul>
         <% @video.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
         <% end %>
+      </ul>
     </div>
 <% end %>
-<div class = "well">
-  <%= form_for @video, html: { multipart: true }, url: '/contests/' + params[:urlconcurso] do |f| %>
-      <%= f.label :firstNameUser %>
-      <%= f.text_field :firstNameUser %>
-      <%= f.label :lastNameUser %>
-      <%= f.text_field :lastNameUser %>
-      <%= f.label :emailUser %>
-      <%= f.email_field :emailUser %>
-      <%= f.label :sin_convertir %>
-      <%= f.file_field :sin_convertir %>
 
-      <%= f.label :name %>
-      <%= f.text_field :name %>
-      <%= f.label :message %>
-      <%= f.text_field :message %>
+  <div class="container-fluid" style="width: 800px; margin: -10% auto 5%;">
+    <h2>Ingresar Video</h2>
+      <div class="well">
+        <%= form_for @video, html: { multipart: true }, url: '/contests/' + params[:urlconcurso] do |f| %>
+            <div class="row col-lg-12">
+                <div class="form-group col-lg-6">
+                    <%= f.label :firstNameUser, 'Nombre' %>
+                    <%= f.text_field :firstNameUser, class: "form-control", autofocus: true %>
+                </div>
+                <div class="form-group col-lg-6">
+                    <%= f.label :lastNameUser, 'Apellido' %>
+                    <%= f.text_field :lastNameUser, class: "form-control" %>
+                </div>
+            </div>
+            <div class="row col-lg-12">
+                <div class="form-group col-lg-6">
+                    <%= f.label :emailUser, 'Email' %>
+                    <%= f.email_field :emailUser, class: "form-control" %>
+                </div>
+                <div class="form-group col-lg-6">
+                    <%= f.label :sin_convertir, 'Video' %>
+                    <%= f.file_field :sin_convertir %>
+                </div>
+            </div>
+            <div class="row col-lg-12">
+                <div class="form-group col-lg-6">
+                    <%= f.label :name, 'Nombre del video' %>
+                    <%= f.text_field :name, class: "form-control" %>
+                </div>
+                <div class="form-group col-lg-6">
+                    <%= f.label :message, 'Mensaje' %>
+                    <%= f.text_area :message, class: "form-control" %>
+                </div>
+            </div>
+            <%= f.submit 'Ingresar', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+  </div>
 
-      <%= f.submit 'Save', class: 'btn btn-primary' %>
-  <% end %>
 </div>
