@@ -1,5 +1,6 @@
 class ContestsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :new, :create]
+  layout "videos_layout"
 
   def index
     custom_url_concurso = params[:urlconcurso]
@@ -7,6 +8,8 @@ class ContestsController < ApplicationController
   end
 
   def new
+    custom_url_concurso = params[:urlconcurso]
+    @concurso = Concurso.find_by_url(custom_url_concurso)
     @video = Video.new
   end
 

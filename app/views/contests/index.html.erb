@@ -5,63 +5,40 @@
       </div>
     </div>
 <% else %>
-    <div class="row">
-      <div class="align-content-center">
-        <h1>CONCURSO - <%=@concurso.name %></h1>
-        <img src="<%=@concurso.image2 %>">
-        <p><%=@concurso.description %> </p>
-      </div>
-    </div>
-    <div class="row">
-      <a href="<%= '/contests/' + @concurso.url + '/new' %>"><img src="/img_upload.png" height="64" width="64" alt=""> Subir video</a>
-    </div>
-    <div class="row">
-      <% @concurso.videos.each do |video|  %>
-          <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
-            <div class="card h-100">
-              <div id='myElement<%= video.id%>'>Loading the player...</div>
-              <script type='text/javascript'>
-                jwplayer("myElement<%= video.id%>").setup({
-                    "file": "<%= video.sin_convertir%>"
-                });
-              </script>
-              <div class="card-body">
-                <h4 class="card-title">
-                  <a href="#"><%= video.name%></a>
-                </h4>
-                <p class="card-text"><%= video.message %></p>
-                <p>Enviado por: <%= video.firstNameUser + ' ' + video.lastNameUser %>
-                <p>E-mail: <%= video.emailUser %>
+    <div class="container-fluid">
+    <section id="content">
 
-                </p>
-              </div>
-            </div>
-          </div>
-      <% end %>
-    </div>
-    <!-- /.row -->
+      <div id="our-work">
+        <div class="resume_image">
+          <a href="<%= '/contests/' + @concurso.url + '/new' %>"><img src="/img_upload.png" height="64" width="64" alt=""> Subir video</a>
+        </div>
+        <br>
+        <div id="content_videos">
+          <ul>
+            <% @concurso.videos.each do |video|  %>
+                <li>
+                  <div class="link_show_video">
+                    <a href="#"><%= video.name%></a>
+                  </div>
+                  <div id="myElement<%= video.id %>">Loading the player...</div>
+                  <script type='text/javascript'>
+                      jwplayer("myElement<%= video.id%>").setup({
+                          "file": "<%= video.sin_convertir%>"
+                      });
+                  </script>
+                  <div class="resume_image">
+                    <div class="item_resume"><strong><%= video.message %></strong></div>
+                    <div class="item_resume">Usuario: <%= video.firstNameUser + ' ' + video.lastNameUser %></div>
+                    <div class="item_resume">Email: <%= video.emailUser %></div>
+                  </div>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+      <!-- /.row -->
     <!-- Pagination -->
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
-      </li>
-    </ul>
+    </div>
 <% end %>
