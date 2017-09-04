@@ -1,38 +1,54 @@
 <div class="row">
-  <div class="align-content-center">
-    <h1>CONCURSO - <%=@concurso.name %></h1>
-    <img src="<%=@concurso.image2 %>">
-    <p><%=@concurso.description %> </p>
+  <div class="row col-lg-12" style="width: 100%">
+    <h1 class="page-header" style="font-family: 'Fira Sans', 'Source Sans Pro', sans-serif"><strong>CONCURSO - <%=@concurso.name %></strong></h1>
+    <div class="col-lg-12">
+      <div class="col-lg-6 pull-left">
+          <h2><%=@concurso.description %></h2>
+      </div>
+      <div class="col-lg-6 pull-right">
+        <img src="<%=@concurso.image2 %>" width="300" height="200">
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
+<h1>Videos subidos</h1>
+<div class="row col-lg-12">
   <% @concurso.videos.each do |video|  %>
       <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <!--<div class="col-lg-6 col-md-6 col-sm-6">-->
+          <div class="card-body">
+              <h4 class="card-title">
+                  <a href="#"><%= video.name%></a>
+              </h4>
+          </div>
+          <div class="video text-center">
             <div id='myElement<%= video.id%>'>Loading the player...</div>
             <script type='text/javascript'>
                 jwplayer("myElement<%= video.id%>").setup({
                     "file": "<%= video.sin_convertir%>"
                 });
             </script>
+            <span class="label label-success">Convertido!</span>
+          </div>
           <!--</div>-->
           <!--<div class="col-lg-6 col-md-6 col-sm-6">-->
+          <div class="video text-center">
             <div id='myElement<%= video.id %>_conv'>Loading the player...</div>
             <script type='text/javascript'>
                 jwplayer("myElement<%= video.id%>_conv").setup({
                     "file": "<%= video.sin_convertir%>"
                 });
             </script>
+            <span class="label label-warning">Sin convertir!</span>
+          </div>
           <!--</div>-->
           <div class="card-body">
-            <h4 class="card-title">
-              <a href="#"><%= video.name%></a>
-            </h4>
-            <p class="card-text"><%= video.message %></p>
-            <p>Enviado por: <%= video.firstNameUser + ' ' + video.lastNameUser %>
-            <p>E-mail: <%= video.emailUser %>
 
+            <p class="card-text">
+                <strong><%= video.message %></strong> <br>
+                Enviado por: <%= video.firstNameUser + ' ' + video.lastNameUser %> <br>
+                E-mail: <%= video.emailUser %>
             </p>
           </div>
         </div>

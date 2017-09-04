@@ -5,7 +5,7 @@
  */
 
 body {
-
+    font-family: 'Fira Sans','Source Sans Pro', sans-serif;
 }
 
 
@@ -69,6 +69,10 @@ header h1{
 
 .glyphicon {
     font-size: 25px;
+}
+
+.video{
+    padding: 5px 0;
 }
 
 .portfolio-item {
