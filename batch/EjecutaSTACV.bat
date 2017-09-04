@@ -1,0 +1,2 @@
+java -jar C:\Users\alfye\Documents\Compartido\STAVC.jar -h 127.0.0.1 -ph 5432 -u postgres -p postgres -nb SmartToolsApp_development -rt "C:\Users\alfye\Documents\Cloud\SmartToolsApp\public\system\videos" -ms 1
+Convirtiendo video :VID-20170802-WA0025_7.mp4
