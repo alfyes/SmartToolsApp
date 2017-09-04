@@ -18,8 +18,9 @@ class ConcursosController < ApplicationController
 
   def create
     @consurso = current_user.concursos.new(concurso_params)
+    @consurso.url = @consurso.name.gsub(/[^a-zA-Z\d_\-]/, '-')
     if @consurso.save
-      redirect_to concursos_path, notice: "The video #{@consurso.name} has been uploaded."
+      redirect_to concursos_path, notice: "El concurso #{@consurso.name} ha sido creado."
     else
       render 'new'
     end
@@ -31,8 +32,7 @@ class ConcursosController < ApplicationController
 
   def update
     @consurso = Concurso.find(params[:id])
-
-    if @consurso.update(concurso_params)
+    if @consurso.update(concurso_params_update)
       redirect_to concursos_path
     else
       render 'edit'
@@ -48,8 +48,11 @@ class ConcursosController < ApplicationController
 
   private
 
-  def concurso_params
+  def concurso_params_update
     params.require(:concurso).permit(:name, :url, :description, :image2, :startDate, :endDate)
+  end
+  def concurso_params
+    params.require(:concurso).permit(:name, :description, :image2, :startDate, :endDate)
   end
 
 
