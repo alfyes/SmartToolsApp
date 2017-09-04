@@ -16,22 +16,24 @@
         <div id="content_videos">
           <ul>
             <% @concurso.videos.each do |video|  %>
-                <li>
-                  <div class="link_show_video">
-                    <a href="#"><%= video.name%></a>
-                  </div>
-                  <div id="myElement<%= video.id %>">Loading the player...</div>
-                  <script type='text/javascript'>
-                      jwplayer("myElement<%= video.id%>").setup({
-                          "file": "<%= video.sin_convertir%>"
-                      });
-                  </script>
-                  <div class="resume_image">
-                    <div class="item_resume"><strong><%= video.message %></strong></div>
-                    <div class="item_resume">Usuario: <%= video.firstNameUser + ' ' + video.lastNameUser %></div>
-                    <div class="item_resume">Email: <%= video.emailUser %></div>
-                  </div>
-                </li>
+                <% if video.state %>
+                  <li>
+                    <div class="link_show_video">
+                      <a href="#"><%= video.name%></a>
+                    </div>
+                    <div id="myElement<%= video.id %>">Loading the player...</div>
+                    <script type='text/javascript'>
+                        jwplayer("myElement<%= video.id%>").setup({
+                            "file": "<%= video.sin_convertir.url.gsub(/\/original\//, '/convertido/')%>"
+                        });
+                    </script>
+                    <div class="resume_image">
+                      <div class="item_resume"><strong><%= video.message %></strong></div>
+                      <div class="item_resume">Usuario: <%= video.firstNameUser + ' ' + video.lastNameUser %></div>
+                      <div class="item_resume">Email: <%= video.emailUser %></div>
+                    </div>
+                  </li>
+                <% end %>
             <% end %>
           </ul>
         </div>
