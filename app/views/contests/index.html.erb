@@ -15,7 +15,8 @@
         <br>
         <div id="content_videos">
           <ul>
-            <% @concurso.videos.each do |video|  %>
+            <% @concurso.videos.sort_by {|video| video.created_at}.reverse.each do |video| %>
+
                 <% if video.state %>
                   <li>
                     <div class="link_show_video">

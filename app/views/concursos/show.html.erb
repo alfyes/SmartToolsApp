@@ -13,7 +13,7 @@
 </div>
 <h1>Videos subidos</h1>
 <div class="row col-lg-12">
-  <% @concurso.videos.each do |video|  %>
+  <% @concurso.videos.sort_by {|video| video.created_at}.reverse.each do |video|  %>
       <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
         <div class="card h-100">
           <!--<div class="col-lg-6 col-md-6 col-sm-6">-->
@@ -22,15 +22,7 @@
                   <a href="#"><%= video.name%></a>
               </h4>
           </div>
-          <div class="video text-center">
-            <div id='myElement<%= video.id%>'>Loading the player...</div>
-            <script type='text/javascript'>
-                jwplayer("myElement<%= video.id%>").setup({
-                    "file": "<%= video.sin_convertir.url.gsub(/\/original\//, '/convertido/')%>"
-                });
-            </script>
-            <span class="label label-success">Convertido!</span>
-          </div>
+
           <!--</div>-->
           <!--<div class="col-lg-6 col-md-6 col-sm-6">-->
           <div class="video text-center">
@@ -41,6 +33,20 @@
                 });
             </script>
             <span class="label label-warning">Sin convertir!</span>
+          </div>
+
+          <div class="video text-center">
+            <% if video.state %>
+              <div id='myElement<%= video.id%>'>Loading the player...</div>
+              <script type='text/javascript'>
+                  jwplayer("myElement<%= video.id%>").setup({
+                      "file": "<%= video.sin_convertir.url.gsub(/\/original\//, '/convertido/')%>"
+                  });
+              </script>
+              <span class="label label-success">Convertido!</span>
+            <% else video.state %>
+                <span class="label label-success">Pendiete de conversion!</span>
+            <% end %>
           </div>
           <!--</div>-->
           <div class="card-body">
