@@ -157,6 +157,8 @@
 <body>
 <div id="container" style="">
   <section id="content">
+      <% if notice %><div class="alert alert-info"><%= notice %></div><% end %>
+      <% if alert %><div class="alert alert-warning"><%= alert %></div><% end %>
       <header>
         <div id="pfd">
           <a href="index.html">

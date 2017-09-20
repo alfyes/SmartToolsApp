@@ -15,8 +15,7 @@
         <br>
         <div id="content_videos">
           <ul>
-            <% @concurso.videos.sort_by {|video| video.created_at}.reverse.each do |video| %>
-
+            <% @videos.each do |video| %>
                 <% if video.state %>
                   <li>
                     <div class="link_show_video">
@@ -37,7 +36,11 @@
                 <% end %>
             <% end %>
           </ul>
+
         </div>
+      </div>
+      <div class="col-lg-6">
+        <%= will_paginate @videos, renderer: BootstrapPagination::Rails %>
       </div>
     </section>
 

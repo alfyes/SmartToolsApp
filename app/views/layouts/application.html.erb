@@ -29,6 +29,9 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse">
+      <% if user_signed_in? %>
+      <span class="navbar-text navbar-right" style="color: white"><strong><%= current_user.email %></strong></span>
+      <% end %>
       <ul class="navbar-nav ml-auto navbar-right">
         <li class="nav-item active">
           <%= link_to 'Home', home_index_path, class: 'nav-link' %>
