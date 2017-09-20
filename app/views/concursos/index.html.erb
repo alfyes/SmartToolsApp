@@ -14,7 +14,9 @@
           <h4 class="card-title">
             <%= link_to concurso.name, concurso_path(concurso) %>
           </h4>
-          URL: <a href="http://localhost:3000/contests/<%=concurso.url%>">http://localhost:3000/contests/<%=concurso.url%></a>
+          <!--URL: <a href="http://localhost:3000/contests/<%=concurso.url%>">http://localhost:3000/contests/<%=concurso.url%></a>-->
+          <!-- <%=link_to('Home del concurso',{:controller=>'contests',:action=>'index',:urlconcurso=>concurso.url })%><br> -->
+          URL: <%=link_to(root_url + 'contests/' + concurso.url, {:controller=>'contests',:action=>'index',:urlconcurso=>concurso.url })%><br>  
           <p class="card-text"><%= concurso.description %></p>
         </div>
         <div class="card-footer">
