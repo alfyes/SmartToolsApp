@@ -1,12 +1,13 @@
 class ConcursosController < ApplicationController
 
   def index
-    @concursos = current_user.concursos
+    @concursos = current_user.concursos.reverse_order.paginate(:page => params[:page], :per_page => 4)
   end
 
   def show
     begin
       @concurso =  current_user.concursos.find(params[:id])
+      @videos = @concurso.videos.reverse_order.paginate(:page => params[:page], :per_page => 4)
     rescue ActiveRecord::RecordNotFound
       redirect_to concursos_path
     end
