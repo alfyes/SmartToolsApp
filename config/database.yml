@@ -29,3 +29,4 @@ production:
   username: <%= ENV["POSTGRES_BD_USUARIO"] %>
   password: <%= ENV["POSTGRES_BD_CLAVE"] %>
   database: <%= ENV["POSTGRES_BD_NOMBRE"] %>
+  host: <%= ENV["POSTGRES_BD_HOST"] %>
