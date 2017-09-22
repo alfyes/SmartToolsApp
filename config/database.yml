@@ -24,5 +24,8 @@ test:
   database: SmartToolsApp_test
 
 production:
-  <<: *default
-  database: SmartToolsApp
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV["POSTGRES_BD_USUARIO"] %>
+  password: <%= ENV["POSTGRES_BD_CLAVE"] %>
+  database: <%= ENV["POSTGRES_BD_NOMBRE"] %>
