@@ -44,7 +44,7 @@ public class BDPostgres {
 	
 	public boolean actualizarEstadoVideo(Video video){
 		
-		String consulta = "update videos set state = ? where id = ? ";
+		String consulta = "update videos set state = ?, convertido_file_name = ?, convertido_file_size = ?, convertido_content_type = ?, convertido_updated_at = sin_convertir_updated_at where id = ? ";
 		
 		int affectedRows = 0;
 		
@@ -52,7 +52,10 @@ public class BDPostgres {
 				PreparedStatement pstmt = conn.prepareStatement(consulta)){
 			
 			pstmt.setBoolean(1, video.state);
-			pstmt.setLong(2, video.id);
+			pstmt.setString(2, video.convertido_file_name);
+			pstmt.setInt(3, video.convertido_file_size);
+			pstmt.setString(4, video.convertido_content_type);
+			pstmt.setLong(5, video.id);
 			
 			affectedRows = pstmt.executeUpdate();
 		}catch (SQLException e) {
