@@ -5,7 +5,7 @@ class ContestsController < ApplicationController
   def index
     custom_url_concurso = params[:urlconcurso]
     @concurso = Concurso.find_by_url(custom_url_concurso)
-    @videos = @concurso.videos.reverse_order.paginate(:page => params[:page], :per_page => 20)
+    @videos = @concurso.videos.reverse_order.paginate(:page => params[:page], :per_page => 5)
   end
 
   def new
