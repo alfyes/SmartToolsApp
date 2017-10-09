@@ -7,8 +7,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     registrations: 'users/registrations'
   }
-  resources :concursos
-
+  resources :concursos #, except: :destroy
+ # delete '/concursos/:id', to: 'concursos#destroy'
   get '/contests/:urlconcurso', to: 'contests#index', constraints: { urlconcurso: /([a-zA-Z]|\d|_|\-)+/}
   get '/contests/:urlconcurso/new', to: 'contests#new', constraints: { urlconcurso: /([a-zA-Z]|\d|_|\-)+/}
   post '/contests/:urlconcurso', to: 'contests#create', constraints: { urlconcurso: /([a-zA-Z]|\d|_|\-)+/}

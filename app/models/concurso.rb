@@ -1,7 +1,16 @@
-class Concurso < ApplicationRecord
-  belongs_to :user
-  has_many :videos, dependent: :destroy
-  has_attached_file :image2
-  validates_attachment :image2, presence: true, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
-  do_not_validate_attachment_file_type :image2
+class Concurso
+  include Aws::Record
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  attr_accessor :user_id, :concurso_id, :url, :startDate, :endDate, :description,
+                :image2, :name
+
+  string_attr :user_id, hash_key: true
+  string_attr :concurso_id, range_key: true
+  string_attr :name
+  string_attr :url
+  datetime_attr :startDate
+  datetime_attr :endDate
+  string_attr :description
+  string_attr :image2
 end

@@ -1,4 +1,5 @@
-<%= form_for @consurso, html: { multipart: true } do |f| %>
+
+<%= form_for @consurso, url: {action: @accion[:action]}, method: @accion[:method] ,html: { multipart: true } do |f| %>
     <div class="row col-lg-12">
       <div class="form-group col-lg-6">
         <%= f.label :name, 'Nombre' %>
@@ -9,7 +10,7 @@
         <%= f.file_field :image2 %>
       </div>
     </div>
-    <% if @consurso.id.nil? || @consurso.id == 0 %>
+    <% if @consurso.user_id.nil? || @consurso.user_id == '' %>
       <div class="row col-lg-12">
         <div class="form-group col-lg-12">
           <%= f.label :description, 'Descripción' %>
@@ -18,7 +19,7 @@
       </div>
     <% else %>
         <div class="row col-lg-12">
-          <div class="form-group col-lg-6">
+        <div class="form-group col-lg-6">
           <%= f.label :url, 'URL' %>
           <%= f.text_field :url, class: "form-control" %>
         </div>
