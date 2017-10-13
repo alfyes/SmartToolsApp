@@ -14,6 +14,6 @@ class Concurso
   string_attr :description
   string_attr :image2
 
-  global_secondary_index(:ConcursoXUrl, hash_key: :url, projection_type: 'ALL')
+  global_secondary_index(:ConcursoXUrl, hash_key: :url, projection: { projection_type: 'ALL' })
 
 end
