@@ -5,6 +5,8 @@ class Concurso
   attr_accessor :user_id, :concurso_id, :url, :startDate, :endDate, :description,
                 :image2, :name
 
+  set_table_name 'Concursos'
+  
   string_attr :user_id, hash_key: true
   string_attr :concurso_id, range_key: true
   string_attr :name
