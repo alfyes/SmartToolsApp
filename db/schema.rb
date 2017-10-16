@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170917095104) do
+ActiveRecord::Schema.define(version: 20171008190605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 20170917095104) do
     t.string "convertido_content_type"
     t.integer "convertido_file_size"
     t.datetime "convertido_updated_at"
+    t.boolean "convirtiendo"
+    t.integer "worker"
     t.index ["concurso_id"], name: "index_videos_on_concurso_id"
   end
 
