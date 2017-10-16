@@ -3,6 +3,9 @@ package com.smarttoolsapp.video;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Map;
+
+import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 public class Video {
 	long id;
@@ -18,6 +21,8 @@ public class Video {
 	int convertido_file_size;
 	String convertido_content_type;
 	Timestamp convertido_updated_at;
+	String videoId;
+	String concursoId;
 	
 	public static Video fromResultSet(ResultSet rs) throws SQLException
 	{
@@ -48,5 +53,21 @@ public class Video {
 		return (convertido_file_name.substring(0, posIns) 
 				+ "_" + String.valueOf(id)
 				+ convertido_file_name.substring(posIns, convertido_file_name.length()));
+	}
+	
+	public static Video fromMapAttribute(Map<String, AttributeValue> rs)
+	{
+		Video video = new Video();	
+		video.videoId = rs.get("video_id").s();
+		video.name = rs.get("name").s();
+		video.message = rs.get("message").s();
+		video.firstNameUser = rs.get("firstNameUser").s();
+		video.lastNameUser = rs.get("lastNameUser").s();
+		video.emailUser = rs.get("emailUser").s();
+		//video.state = rs.getBoolean("state");
+		video.concursoId= rs.get("concurso_id").s();
+		video.sin_convertir_file_name = rs.get("fileName").s();
+		
+		return(video);
 	}
 }

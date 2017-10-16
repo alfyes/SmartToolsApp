@@ -13,6 +13,9 @@ public class Parametros {
 	private static String claveCorreo;
 	private static String hostCorreo;
 	private static String fromCorreo;
+	private static int worker = 0;
+	private static boolean noSql = false;
+	private static boolean noSqlRemoto = false;
 	
 	private static int controlParametros = 0;
 	
@@ -69,6 +72,19 @@ public class Parametros {
 			return fromCorreo;
 	}
 	
+	public static int getWorker(int worker) {
+		if(Parametros.worker != 0)
+			return Parametros.worker;
+		else
+			return worker;
+	}
+	public static boolean isNoSql() {
+		return noSql;
+	}
+	public static boolean isNoSqlRemoto() {
+		return noSqlRemoto;
+	}
+	
 	public static void setParametro(String parametro, String valor)
 	{
 		switch (parametro) {
@@ -119,6 +135,22 @@ public class Parametros {
 		case "-cf":
 			fromCorreo = valor;
 			break;
+		case "-wk": 
+			 try {
+				worker = Integer.valueOf(valor);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				worker = 0;
+			}
+			break;
+		case "-nosql": 
+			 try {
+				noSql = Boolean.valueOf(valor);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				noSql = false;
+			}
+			break;
 		default:
 			break;
 		}
@@ -126,6 +158,9 @@ public class Parametros {
 	
 	public static boolean isAllReady()
 	{
+		String aca = System.getenv("NO_SQL_HOST");
+		if (aca != null)	
+			noSqlRemoto = aca.equalsIgnoreCase("remoto");
 		return(controlParametros == 0x1F);
 	}
 	
