@@ -4,13 +4,13 @@ class ConcursosController < ApplicationController
     # @concursos = current_user.concursos.reverse_order.paginate(:page => params[:page], :per_page => 4)
     @concursos = Concurso.query(key_condition_expression: 'user_id = :h',
                                 expression_attribute_values: { ':h' => current_user.email })
-    print(@concursos.count)
-    esto = 'hola'
   end
 
   def show
-    @concurso = current_user.concursos.find(params[:id])
-    @videos = @concurso.videos.reverse_order.paginate(page: params[:page], per_page: 4)
+    @concurso = Concurso.find(user_id: current_user.email, concurso_id: params[:id])
+    #@videos = @concurso.videos.reverse_order.paginate(page: params[:page], per_page: 4)
+    @videos = Video.query(key_condition_expression: 'concurso_id = :h',
+                          expression_attribute_values: { ':h' => params[:id] })
   rescue ActiveRecord::RecordNotFound
     redirect_to concursos_path
   end
@@ -24,7 +24,7 @@ class ConcursosController < ApplicationController
     @consurso = Concurso.new(concurso_params)
     @consurso.user_id = current_user.email
     @consurso.concurso_id = generate_concurso_uuid
-    @consurso.url = @consurso.name.gsub(/[^a-zA-Z\d_\-]/, '-')
+    @consurso.concurso_url = @consurso.name.gsub(/[^a-zA-Z\d_\-]/, '-')
     parametros = params[:concurso]
     @consurso.startDate = date_from_params(parametros, 'startDate')
     @consurso.endDate = date_from_params(parametros, 'endDate')

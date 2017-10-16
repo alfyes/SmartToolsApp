@@ -1,16 +1,23 @@
-class Video < ApplicationRecord
-  belongs_to :concurso
-  has_attached_file :sin_convertir,
-                    path: ':rails_root/public/system/:class/original/:basename_:id.:extension',
-                    url: '/system/:class/original/:basename_:id.:extension'
-  #validates_attachment :image2, presence: true, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
-  do_not_validate_attachment_file_type :sin_convertir
+class Video
+  include Aws::Record
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  attr_accessor :concurso_id, :video_id, :name, :message, :firstNameUser,
+                :lastNameUser, :emailUser, :state, :createDate, :fileName,
+                :fileNameConv
 
-  has_attached_file :convertido,
-                    path: ':rails_root/public/system/:class/convertido/:basename_:id.:extension',
-                    url: '/system/:class/convertido/:basename_:id.:extension'
-  #validates_attachment :image2, presence: true, content_type: { content_type: ["image/jpeg", "image/gif", "image/png"] }
-  do_not_validate_attachment_file_type :convertido
+  set_table_name 'Videos'
 
+  string_attr :concurso_id, hash_key: true
+  string_attr :video_id, range_key: true
+  string_attr :name
+  string_attr :message
+  string_attr :firstNameUser
+  string_attr :lastNameUser
+  string_attr :emailUser
+  integer_attr :state
+  datetime_attr :createDate
+  string_attr :fileName
+  string_attr :fileNameConv
 
 end

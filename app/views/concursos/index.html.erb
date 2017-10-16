@@ -14,7 +14,7 @@
           <h4 class="card-title">
             <%= link_to concurso.name, concurso_path(concurso), action:'show' %>
           </h4>
-          URL: <%=link_to(root_url + 'contests/' + concurso.url, {:controller=>'contests',:action=>'index',:urlconcurso=>concurso.url })%><br>  
+          URL: <%=link_to(root_url + 'contests/' + concurso.concurso_url, {:controller=>'contests',:action=>'index',:urlconcurso=>concurso.concurso_url })%><br>  
           <p class="card-text"><%= concurso.description %></p>
         </div>
         <div class="card-footer">

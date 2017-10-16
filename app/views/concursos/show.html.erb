@@ -6,7 +6,7 @@
           <h2><%=@concurso.description %></h2>
       </div>
       <div class="col-lg-6 pull-right">
-        <img src="<%=@concurso.image2 %>" width="300" height="200">
+        <img src="<%=url_imagen_concurso(@concurso) %>" width="300" height="200">
       </div>
     </div>
   </div>
@@ -26,21 +26,21 @@
           <!--</div>-->
           <!--<div class="col-lg-6 col-md-6 col-sm-6">-->
           <div class="video text-center">
-            <div id='myElement<%= video.id %>_conv'>Loading the player...</div>
+            <div id='myElement<%= video.video_id %>_conv'>Loading the player...</div>
             <script type='text/javascript'>
-                jwplayer("myElement<%= video.id%>_conv").setup({
-                    "file": "<%= video.sin_convertir%>"
+                jwplayer("myElement<%= video.video_id%>_conv").setup({
+                    "file": "<%= url_video_original(video)%>"
                 });
             </script>
             <span class="label label-warning">Sin convertir!</span>
           </div>
 
           <div class="video text-center">
-            <% if video.state %>
-              <div id='myElement<%= video.id%>'>Loading the player...</div>
+            <% if video.state == 2 %>
+              <div id='myElement<%= video.video_id%>'>Loading the player...</div>
               <script type='text/javascript'>
-                  jwplayer("myElement<%= video.id%>").setup({
-                      "file": "<%= video.convertido %>"
+                  jwplayer("myElement<%= video.video_id%>").setup({
+                      "file": "<%= url_video_convertido(video) %>"
                   });
               </script>
               <span class="label label-success">Convertido!</span>
@@ -64,5 +64,5 @@
 <!-- /.row -->
 <!-- Pagination -->
 <div class="col-lg-12" style="margin-bottom: 20px">
-  <%= will_paginate @videos, renderer: BootstrapPagination::Rails %>
+
 </div>

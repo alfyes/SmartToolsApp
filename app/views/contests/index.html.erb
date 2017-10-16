@@ -10,21 +10,21 @@
 
       <div id="our-work">
         <div class="resume_image">
-          <a href="<%= '/contests/' + @concurso.url + '/new' %>"><img src="/img_upload.png" height="64" width="64" alt=""> Subir video</a>
+          <a href="<%= '/contests/' + @concurso.concurso_url + '/new' %>"><img src="/img_upload.png" height="64" width="64" alt=""> Subir video</a>
         </div>
         <br>
         <div id="content_videos">
           <ul>
             <% @videos.each do |video| %>
-                <% if video.state %>
+                <% if video.state == 2 %>
                   <li>
                     <div class="link_show_video">
                       <a href="#"><%= video.name%></a>
                     </div>
-                    <div id="myElement<%= video.id %>">Loading the player...</div>
+                    <div id="myElement<%= video.video_id %>">Loading the player...</div>
                     <script type='text/javascript'>
-                        jwplayer("myElement<%= video.id%>").setup({
-                            "file": "<%= video.convertido %>"
+                        jwplayer("myElement<%= video.video_id%>").setup({
+                            "file": "<%= url_video_convertido(video) %>"
                         });
                     </script>
                     <div class="resume_image">
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <%= will_paginate @videos, renderer: BootstrapPagination::Rails %>
+
       </div>
     </section>
 
