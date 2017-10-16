@@ -1,25 +1,14 @@
 require 'securerandom'
-module ConcursosHelper
-  def url_imagen_concurso(concurso)
-    '/system/concursos/' + concurso.image2
-  end
 
-  def get_image_name(original)
-    nombre_imagen = original
-    while File.exist?(Rails.root.join('public', 'system', 'concursos',
-                                      nombre_imagen))
-      pos_punto = nombre_imagen.rindex('.')
-      nombre_imagen = Random.rand(1000).to_s.prepend(nombre_imagen[0, pos_punto] + '_') + nombre_imagen[pos_punto, nombre_imagen.length]
-    end
-    nombre_imagen
+module ConcursosHelper
+  include ApplicationHelper
+
+  def url_imagen_concurso(concurso)
+    'https://smart-tools-app.s3.us-east-2.amazonaws.com/concursos/' + concurso.image2
   end
 
   def delete_image_concurso(concurso)
-    if File.exist?(Rails.root.join('public', 'system', 'concursos',
-                                   concurso.image2))
-      File.delete(Rails.root.join('public', 'system', 'concursos',
-                                  concurso.image2))
-    end
+    delete_file_s3('concursos/', concurso.image2)
   end
 
   def concurso_path(concurso)
@@ -39,4 +28,9 @@ module ConcursosHelper
              params[field + '(2i)'].to_i,
              params[field + '(3i)'].to_i)
   end
+
+  def upload_image_concurso(uploaded_io)
+    upload_file_s3(uploaded_io, 'concursos/')
+  end
+
 end

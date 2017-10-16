@@ -28,7 +28,8 @@ class ConcursosController < ApplicationController
     parametros = params[:concurso]
     @consurso.startDate = date_from_params(parametros, 'startDate')
     @consurso.endDate = date_from_params(parametros, 'endDate')
-    @consurso.image2 = upload_image
+    @consurso.image2 = upload_image_concurso(params[:concurso][:image2])
+    # upload_image2
     if @consurso.save
       redirect_to concursos_path, notice: "El concurso #{@consurso.name} ha sido creado."
     else
@@ -72,7 +73,7 @@ class ConcursosController < ApplicationController
         description: params[:concurso][:description] }
     else
       { user_id: current_user.email, concurso_id: params[:id],
-        image2: upload_image,
+        image2: upload_image_concurso(params[:concurso][:image2]),
         startDate: date_from_params(params[:concurso], 'startDate'),
         endDate: date_from_params(params[:concurso], 'endDate'),
         name: params[:concurso][:name],
@@ -85,15 +86,4 @@ class ConcursosController < ApplicationController
     params.require(:concurso).permit(:name, :description, :image2)
   end
 
-  def upload_image
-    uploaded_io = params[:concurso][:image2]
-
-    nombre_imagen = get_image_name(uploaded_io.original_filename)
-
-    File.open(Rails.root.join('public', 'system', 'concursos',
-                              nombre_imagen), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-    nombre_imagen
-  end
 end
