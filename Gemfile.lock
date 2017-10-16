@@ -639,6 +639,7 @@ DEPENDENCIES
   autoprefixer-rails
   aws-record
   aws-sdk
+  aws-sdk-s3
   bcrypt
   bootstrap-sass
   byebug

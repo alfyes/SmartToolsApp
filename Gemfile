@@ -63,4 +63,6 @@ gem 'will_paginate-bootstrap'
 
 gem 'aws-record'
 gem 'aws-sdk'
+gem 'aws-sdk-s3'
+
 
