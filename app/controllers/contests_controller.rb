@@ -28,7 +28,7 @@ class ContestsController < ApplicationController
                               key_condition_expression: 'concurso_url = :h',
                               expression_attribute_values: { ':h' => custom_url_concurso }).first()
     @video = Video.new(video_params)
-    @video.fileName = upload_video
+    @video.fileName = upload_video_concurso(params[:video][:fileName])
     @video.createDate = DateTime.now
     @video.video_id = generate_video_uuid
     @video.concurso_id = concurso.concurso_id
@@ -50,15 +50,4 @@ class ContestsController < ApplicationController
                                   :emailUser, :fileName)
   end
 
-  def upload_video
-    uploaded_io = params[:video][:fileName]
-
-    nombre_video = get_video_name(uploaded_io.original_filename)
-
-    File.open(Rails.root.join('public', 'system', 'videos', 'original',
-                              nombre_video), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-    nombre_video
-  end
 end

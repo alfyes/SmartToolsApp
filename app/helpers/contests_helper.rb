@@ -1,26 +1,17 @@
 require 'securerandom'
 module ContestsHelper
+  include ApplicationHelper
 
   def url_video_original(video)
-    '/system/videos/original/' + video.fileName
+    'https://smart-tools-app.s3.us-east-2.amazonaws.com/videos/original/' + video.fileName
   end
 
   def url_video_convertido(video)
     if video.fileNameConv.nil?
       '/system/videos/convertido/' + 'Error'
     else
-      '/system/videos/convertido/' + video.fileNameConv
+      'https://smart-tools-app.s3.us-east-2.amazonaws.com/videos/convertido/' + video.fileNameConv
     end
-  end
-
-  def get_video_name(original)
-    nombre_video = original
-    while File.exist?(Rails.root.join('public', 'system', 'videos', 'original',
-                                      nombre_video))
-      pos_punto = nombre_video.rindex('.')
-      nombre_video = Random.rand(1000).to_s.prepend(nombre_video[0, pos_punto] + '_') + nombre_video[pos_punto, nombre_video.length]
-    end
-    nombre_video
   end
 
   def generate_video_uuid
@@ -28,15 +19,11 @@ module ContestsHelper
   end
 
   def delete_video(video)
-    nombre_archivo = Rails.root.join('public', 'system', 'videos', 'original',
-                                     video.fileName)
-    if File.exist?(nombre_archivo)
-      File.delete(nombre_archivo)
-    end
-    nombre_archivo = Rails.root.join('public', 'system', 'videos', 'convertido',
-                                     video.fileNameConv)
-    if File.exist?(nombre_archivo)
-      File.delete(nombre_archivo)
-    end
+    delete_file_s3('videos/original/', video.fileName)
+    delete_file_s3('videos/convertido/', video.fileNameConv)
+  end
+
+  def upload_video_concurso(uploaded_io)
+    upload_file_s3(uploaded_io, 'videos/original/')
   end
 end
