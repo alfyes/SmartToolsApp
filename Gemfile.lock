@@ -640,6 +640,7 @@ DEPENDENCIES
   aws-record
   aws-sdk
   aws-sdk-s3
+  aws-sdk-sqs
   bcrypt
   bootstrap-sass
   byebug
