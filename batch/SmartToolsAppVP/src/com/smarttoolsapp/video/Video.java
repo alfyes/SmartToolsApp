@@ -23,6 +23,7 @@ public class Video {
 	Timestamp convertido_updated_at;
 	String videoId;
 	String concursoId;
+	String receiptHandle;
 	
 	public static Video fromResultSet(ResultSet rs) throws SQLException
 	{

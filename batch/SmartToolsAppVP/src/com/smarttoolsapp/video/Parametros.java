@@ -16,6 +16,7 @@ public class Parametros {
 	private static int worker = 0;
 	private static boolean noSql = false;
 	private static boolean noSqlRemoto = false;
+	private static boolean sqsVideos = false;
 	
 	private static int controlParametros = 0;
 	
@@ -78,11 +79,17 @@ public class Parametros {
 		else
 			return worker;
 	}
+	
 	public static boolean isNoSql() {
 		return noSql;
 	}
+	
 	public static boolean isNoSqlRemoto() {
 		return noSqlRemoto;
+	}
+	
+	public static boolean isSqsVideos() {
+		return sqsVideos;
 	}
 	
 	public static void setParametro(String parametro, String valor)
@@ -149,6 +156,14 @@ public class Parametros {
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				noSql = false;
+			}
+			break;
+		case "-sqs": 
+			 try {
+				sqsVideos = Boolean.valueOf(valor);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				sqsVideos = false;
 			}
 			break;
 		default:

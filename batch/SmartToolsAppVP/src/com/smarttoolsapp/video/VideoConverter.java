@@ -187,13 +187,22 @@ public class VideoConverter {
 			CorreoElectronico ce = new CorreoElectronico();
 			boolean continuar;
 			ArchivosS3 s3 = new ArchivosS3();
+			MensajesSQS sqs = new MensajesSQS();
 			
 			do{
 				continuar = false;
-				List<Video> videos = bd.consultarVideosXConvertir();
+				List<Video> videos;
+				
+				if(Parametros.isSqsVideos())
+					 videos = sqs.consultarVideosXConvertir();
+				else
+					videos = bd.consultarVideosXConvertir();
+				
 				for(Video video: videos){
+					
 					continuar = true;
-					if(bd.CambiarVideoAConvirtiendo(video)){
+					
+					if(Parametros.isSqsVideos() || bd.CambiarVideoAConvirtiendo(video)){
 						System.out.println("Convirtiendo video :"
 								+ video.getSinConvertirNameConId());
 						
@@ -217,14 +226,14 @@ public class VideoConverter {
 									if(bd.actualizarEstadoVideo(video)){
 										try {
 											ce.EnviarCorreo(video);
-										} catch (AddressException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										} catch (MessagingException e) {
-											// TODO Auto-generated catch block
+										} catch (Exception e) {
 											e.printStackTrace();
 										}
 									}
+									
+									if(Parametros.isSqsVideos())
+										sqs.borrarVideoDePendientes(video);
+									
 									borrarVideos(video);
 								}
 							}

@@ -39,6 +39,10 @@
   		<artifactId>s3</artifactId>
   	</dependency>
   	<dependency>
+  		<groupId>software.amazon.awssdk</groupId>
+  		<artifactId>sqs</artifactId>
+  	</dependency>
+  	<dependency>
     	<groupId>javax.mail</groupId>
     	<artifactId>javax.mail-api</artifactId>
     	<version>1.5.1</version>
