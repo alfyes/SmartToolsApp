@@ -29,8 +29,8 @@ public class VideoConverter {
 		
 	}
 	public static boolean convertirVideo(Video video){
-		
 		try {
+			
 			if(video.sin_convertir_file_name.toLowerCase().endsWith(".mp4"))
 			{
 				System.out.println("Ya esta en .mp4 ");
@@ -186,6 +186,7 @@ public class VideoConverter {
 			BDDynamo bd = new BDDynamo();
 			CorreoElectronico ce = new CorreoElectronico();
 			boolean continuar;
+			ArchivosS3 s3 = new ArchivosS3();
 			
 			do{
 				continuar = false;
@@ -204,18 +205,27 @@ public class VideoConverter {
 						// Tipo de Contenido
 						video.convertido_content_type = "video/mp4";
 					
-						if(convertirVideo(video))
+						// Descarga del video desde s3
+						if(s3.bajarArchivo(video.sin_convertir_file_name, Parametros.getRutaBaseVideos()
+								+ File.separator + "original" ))
 						{
-							
-							if(bd.actualizarEstadoVideo(video)){
-								try {
-									ce.EnviarCorreo(video);
-								} catch (AddressException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								} catch (MessagingException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+							if(convertirVideo(video))
+							{
+								if(s3.subirArchivo(video.convertido_file_name, Parametros.getRutaBaseVideos()
+										+ File.separator + "convertido"))
+								{
+									if(bd.actualizarEstadoVideo(video)){
+										try {
+											ce.EnviarCorreo(video);
+										} catch (AddressException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (MessagingException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+									borrarVideos(video);
 								}
 							}
 						}
@@ -227,5 +237,33 @@ public class VideoConverter {
 		else
 			System.out.println("Se debe especificar todos los parametros:\r\n" +
 					Parametros.getListaParametros());
+	}
+	
+	static void borrarVideos(Video video)
+	{
+		try {
+			File f = new File(Parametros.getRutaBaseVideos()
+											+ File.separator
+											+ "convertido" 
+											+ File.separator
+											+ video.convertido_file_name);
+			if (f.exists())
+				f.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			File f2 = new File(Parametros.getRutaBaseVideos()
+					+ File.separator
+					+ "original" 
+					+ File.separator
+					+ video.sin_convertir_file_name);
+			if (f2.exists())
+				f2.delete();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
