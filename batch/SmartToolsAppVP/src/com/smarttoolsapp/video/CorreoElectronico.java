@@ -15,7 +15,7 @@ public class CorreoElectronico {
 		MimeMessage generateMailMessage;
 
 		mailServerProperties = System.getProperties();
-		mailServerProperties.put("mail.smtp.port", "25");// "587");
+		mailServerProperties.put("mail.smtp.port", String.valueOf(Parametros.getPuertoCorreo(25)));// "587");
 		mailServerProperties.put("mail.smtp.auth", "true");
 		mailServerProperties.put("mail.smtp.starttls.enable", "true");
 		
@@ -43,11 +43,15 @@ public class CorreoElectronico {
 		
 				
 		generateMailMessage.setContent(emailBody.toString(), "text/html");
-
+		
+		if(Parametros.getFromCorreo() != null)
+			generateMailMessage.setFrom(new InternetAddress(Parametros.getFromCorreo()));
+		
 		Transport transport = getMailSession.getTransport("smtp");
 
-		transport.connect("smtp.gmail.com", "fabricas201717473@gmail.com",
-				"F4BR1C4S");
+		transport.connect(Parametros.getHostCorreo("smtp.gmail.com")
+				, Parametros.getUsuarioCorreo("fabricas201717473@gmail.com")
+				, Parametros.getClaveCorreo("xiptcfujuygimocs"));//"F4BR1C4S2");
 		transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
 		
 		transport.close();
