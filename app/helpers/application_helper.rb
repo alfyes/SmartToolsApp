@@ -62,4 +62,12 @@ module ApplicationHelper
     end
     puts send_message_result.message_id
   end
+
+  def root_url_content
+    # Desde S3.
+    # 'https://smart-tools-app.s3.us-east-2.amazonaws.com/'
+
+    # Desde CloudFront.
+    'https://d1iq2lsf8qakxz.cloudfront.net/'
+  end
 end

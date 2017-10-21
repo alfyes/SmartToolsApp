@@ -3,14 +3,14 @@ module ContestsHelper
   include ApplicationHelper
 
   def url_video_original(video)
-    'https://smart-tools-app.s3.us-east-2.amazonaws.com/videos/original/' + video.fileName
+    root_url_content + 'videos/original/' + video.fileName
   end
 
   def url_video_convertido(video)
     if video.fileNameConv.nil?
       '/system/videos/convertido/' + 'Error'
     else
-      'https://smart-tools-app.s3.us-east-2.amazonaws.com/videos/convertido/' + video.fileNameConv
+      root_url_content + 'videos/convertido/' + video.fileNameConv
     end
   end
 

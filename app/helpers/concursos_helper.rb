@@ -4,7 +4,7 @@ module ConcursosHelper
   include ApplicationHelper
 
   def url_imagen_concurso(concurso)
-    'https://smart-tools-app.s3.us-east-2.amazonaws.com/concursos/' + concurso.image2
+    root_url_content + 'concursos/' + concurso.image2
   end
 
   def delete_image_concurso(concurso)
