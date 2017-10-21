@@ -65,5 +65,7 @@ gem 'aws-record'
 gem 'aws-sdk'
 gem 'aws-sdk-s3'
 gem 'aws-sdk-sqs'
-
+gem 'aws-sdk'
+gem 'aws-sdk-elasticache'
+gem 'dalli-elasticache'
 
