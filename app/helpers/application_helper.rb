@@ -34,29 +34,39 @@ module ApplicationHelper
     begin
       queue_url = sqs.get_queue_url(queue_name: queue_name).queue_url
 
-      # Create a message with three custom attributes: Title, Author, and WeeksOn.
-      send_message_result = sqs.send_message(queue_url: queue_url,
-                                             message_body: 'Convertir video ' +
-                                                 video.name,
-                                             message_attributes:
-                                                 { file_name:
-                                                       { string_value:
-                                                             video.fileName,
-                                                         data_type: 'String' },
-                                                   video_id:
-                                                       { string_value:
-                                                             video.video_id,
-                                                         data_type: 'String' },
-                                                   concurso_id:
-                                                       { string_value:
-                                                             video.concurso_id,
-                                                         data_type:
-                                                             'String' },
-                                                   emailUser:
-                                                       { string_value:
-                                                             video.emailUser,
-                                                         data_type:
-                                                             'String' } })
+      send_message_result = sqs
+                            .send_message(queue_url: queue_url,
+                                          message_body: 'Convertir video ' +
+                                              video.name,
+                                          message_attributes:
+                                             { file_name:
+                                                   { string_value:
+                                                         video.fileName,
+                                                     data_type: 'String' },
+                                               video_id:
+                                                   { string_value:
+                                                         video.video_id,
+                                                     data_type: 'String' },
+                                               concurso_id:
+                                                   { string_value:
+                                                         video.concurso_id,
+                                                     data_type:
+                                                         'String' },
+                                               emailUser:
+                                                   { string_value:
+                                                         video.emailUser,
+                                                     data_type:
+                                                         'String' },
+                                               name:
+                                                   { string_value:
+                                                         video.name,
+                                                     data_type:
+                                                         'String' },
+                                               firstNameUser:
+                                                   { string_value:
+                                                         video.firstNameUser,
+                                                     data_type:
+                                                         'String' } })
     rescue Aws::SQS::Errors::NonExistentQueue
       puts "A queue named '#{queue_name}' does not exist."
     end
