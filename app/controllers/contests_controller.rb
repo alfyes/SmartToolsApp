@@ -16,10 +16,7 @@ class ContestsController < ApplicationController
   def new
     custom_url_concurso = params[:urlconcurso]
     # @concurso = Concurso.find_by_url(custom_url_concurso)
-    @concurso = Concurso.query(index_name: 'ConcursoXUrl',
-                               key_condition_expression: 'concurso_url = :h',
-                               expression_attribute_values: { ':h' => custom_url_concurso }).first()
-    get_id_concurso(custom_url_concurso)
+    @concurso = get_id_concurso(custom_url_concurso)
     @video = Video.new
   end
 
