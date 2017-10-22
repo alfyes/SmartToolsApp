@@ -20,4 +20,6 @@ class Video
   string_attr :fileName
   string_attr :fileNameConv
 
+  local_secondary_index(:VideosXFecha, hash_key: :concurso_id, range_key: :createDate, projection: { projection_type: 'ALL' })
+
 end
