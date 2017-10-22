@@ -28,7 +28,7 @@ module ContestsHelper
 
   def delete_video(video)
     delete_file_s3('videos/original/', video.fileName)
-    delete_file_s3('videos/convertido/', video.fileNameConv)
+    delete_file_s3('videos/convertido/', video.fileNameConv) unless video.fileNameConv.nil?
   end
 
   def upload_video_concurso(uploaded_io)

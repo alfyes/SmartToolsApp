@@ -1,5 +1,6 @@
 class ConcursosController < ApplicationController
   include ConcursosHelper
+  include ContestsHelper
   def index
 
     # @concursos = current_user.concursos.reverse_order.paginate(:page => params[:page], :per_page => 4)
@@ -61,6 +62,7 @@ class ConcursosController < ApplicationController
   def destroy
     @concurso = Concurso.find(user_id: current_user.email,
                               concurso_id: params[:id])
+    borrar_videos_concurso(@concurso.concurso_id)
     delete_image_concurso(@concurso)
     delete_concurso_cache(@concurso.concurso_url)
     @concurso.delete!
@@ -91,6 +93,15 @@ class ConcursosController < ApplicationController
 
   def concurso_params
     params.require(:concurso).permit(:name, :description, :image2)
+  end
+
+  def borrar_videos_concurso(concurso_id)
+    videos = Video.query(index_name: 'VideosXFecha', key_condition_expression: 'concurso_id = :h',
+                         expression_attribute_values: { ':h' => concurso_id })
+    videos.each do |video|
+      delete_video(video)
+      video.delete!
+    end
   end
 
 end
