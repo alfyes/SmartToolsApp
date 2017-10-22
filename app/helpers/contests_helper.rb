@@ -23,7 +23,6 @@ module ContestsHelper
       concurso = Concurso.query(index_name: 'ConcursoXUrl',
                      key_condition_expression: 'concurso_url = :h',
                      expression_attribute_values: { ':h' => url_concurso }).first()
-      concurso.concurso_id
     end
   end
 
