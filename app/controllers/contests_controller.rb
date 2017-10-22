@@ -5,9 +5,7 @@ class ContestsController < ApplicationController
 
   def index
     custom_url_concurso = params[:urlconcurso]
-    @concurso = Concurso.query(index_name: 'ConcursoXUrl',
-                               key_condition_expression: 'concurso_url = :h',
-                               expression_attribute_values: { ':h' => custom_url_concurso }).first()
+    @concurso = get_id_concurso(custom_url_concurso)
     # @videos = @concurso.videos.reverse_order.paginate(:page => params[:page], :per_page => 3)
     @videos = Video.query(key_condition_expression: 'concurso_id = :h',
                           expression_attribute_values: { ':h' => @concurso.concurso_id })
@@ -22,9 +20,7 @@ class ContestsController < ApplicationController
 
   def create
     custom_url_concurso = params[:urlconcurso]
-    concurso = Concurso.query(index_name: 'ConcursoXUrl',
-                              key_condition_expression: 'concurso_url = :h',
-                              expression_attribute_values: { ':h' => custom_url_concurso }).first()
+    concurso = get_id_concurso(custom_url_concurso)
     @video = Video.new(video_params)
     @video.fileName = upload_video_concurso(params[:video][:fileName])
     @video.createDate = DateTime.now

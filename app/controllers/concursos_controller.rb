@@ -6,9 +6,6 @@ class ConcursosController < ApplicationController
     @concursos = Concurso.query(key_condition_expression: 'user_id = :h',
                                 expression_attribute_values: { ':h' => current_user.email })
 
-    Rails.cache.fetch('concursos', expires_in: 12.hours) do
-        'Hola probando'
-    end
   end
 
   def show
