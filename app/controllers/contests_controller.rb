@@ -7,9 +7,9 @@ class ContestsController < ApplicationController
     custom_url_concurso = params[:urlconcurso]
     @concurso = get_id_concurso(custom_url_concurso)
     # @videos = @concurso.videos.reverse_order.paginate(:page => params[:page], :per_page => 3)
-
+    unless @concurso.nil?
       @videos = Video.query(key_condition_expression: 'concurso_id = :h',
-                            expression_attribute_values: { ':h' => @concurso.concurso_id }) unless @concurso.nil?
+                            expression_attribute_values: { ':h' => @concurso.concurso_id })
     end
   end
 
