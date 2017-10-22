@@ -11,7 +11,7 @@ class ConcursosController < ApplicationController
   def show
     @concurso = Concurso.find(user_id: current_user.email, concurso_id: params[:id])
     #@videos = @concurso.videos.reverse_order.paginate(page: params[:page], per_page: 4)
-    @videos = Video.query(key_condition_expression: 'concurso_id = :h',
+    @videos = Video.query(index_name: 'VideosXFecha', key_condition_expression: 'concurso_id = :h',
                           expression_attribute_values: { ':h' => params[:id] })
   rescue ActiveRecord::RecordNotFound
     redirect_to concursos_path
