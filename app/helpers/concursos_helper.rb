@@ -33,4 +33,7 @@ module ConcursosHelper
     upload_file_s3(uploaded_io, 'concursos/')
   end
 
+  def delete_concurso_cache(url_concurso)
+    Rails.cache.delete(url_concurso)
+  end
 end

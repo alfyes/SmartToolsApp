@@ -47,7 +47,11 @@ class ConcursosController < ApplicationController
   end
 
   def update
+    concurso_actual = Concurso.find(user_id: current_user.email, concurso_id:
+        params[:id])
+
     if Concurso.update(concurso_params_update)
+      delete_concurso_cache(concurso_actual.concurso_url)
       redirect_to concursos_path
     else
       render 'edit'
@@ -58,6 +62,7 @@ class ConcursosController < ApplicationController
     @concurso = Concurso.find(user_id: current_user.email,
                               concurso_id: params[:id])
     delete_image_concurso(@concurso)
+    delete_concurso_cache(@concurso.concurso_url)
     @concurso.delete!
 
     redirect_to concursos_path
