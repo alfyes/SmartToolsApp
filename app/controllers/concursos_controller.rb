@@ -1,9 +1,11 @@
 class ConcursosController < ApplicationController
   include ConcursosHelper
   def index
+
     # @concursos = current_user.concursos.reverse_order.paginate(:page => params[:page], :per_page => 4)
     @concursos = Concurso.query(key_condition_expression: 'user_id = :h',
                                 expression_attribute_values: { ':h' => current_user.email })
+    Rails.cache.fetch('concursos') { @concursos }
   end
 
   def show
@@ -85,5 +87,5 @@ class ConcursosController < ApplicationController
   def concurso_params
     params.require(:concurso).permit(:name, :description, :image2)
   end
-
+  
 end
