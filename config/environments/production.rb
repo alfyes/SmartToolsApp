@@ -6,6 +6,7 @@ Rails.application.configure do
   config.cache_classes = true
   endpoint    = "myclustercache.2achjs.0001.use2.cache.amazonaws.com:11211"
   elasticache = Dalli::ElastiCache.new(endpoint)
+  elasticache.set('abc',123)
 
   config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
 
