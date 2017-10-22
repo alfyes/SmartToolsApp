@@ -22,7 +22,7 @@ module ContestsHelper
     Rails.cache.fetch(url_concurso, expires_in: 12.hours) do
       concurso = Concurso.query(index_name: 'ConcursoXUrl',
                      key_condition_expression: 'concurso_url = :h',
-                     expression_attribute_values: { ':h' => custom_url_concurso }).first()
+                     expression_attribute_values: { ':h' => url_concurso }).first()
       concurso.concurso_id
     end
   end
