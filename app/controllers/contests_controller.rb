@@ -31,7 +31,8 @@ class ContestsController < ApplicationController
 
     if @video.save
       send_message_sqs(@video)
-      redirect_to '/contests/' + custom_url_concurso, notice: "The video #{@video.name} has been uploaded."
+      redirect_to '/contests/' + custom_url_concurso, notice:
+          "The video #{@video.name} has been uploaded."
     else
       render 'new'
     end
