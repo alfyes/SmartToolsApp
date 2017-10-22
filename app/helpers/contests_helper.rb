@@ -18,6 +18,15 @@ module ContestsHelper
     SecureRandom.uuid
   end
 
+  def get_id_concurso(url_concurso)
+    Rails.cache.fetch(url_concurso, expires_in: 12.hours) do
+      concurso = Concurso.query(index_name: 'ConcursoXUrl',
+                     key_condition_expression: 'concurso_url = :h',
+                     expression_attribute_values: { ':h' => custom_url_concurso }).first()
+      concurso.concurso_id
+    end
+  end
+
   def delete_video(video)
     delete_file_s3('videos/original/', video.fileName)
     delete_file_s3('videos/convertido/', video.fileNameConv)
