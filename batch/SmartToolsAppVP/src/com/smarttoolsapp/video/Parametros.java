@@ -17,6 +17,8 @@ public class Parametros {
 	private static boolean noSql = false;
 	private static boolean noSqlRemoto = false;
 	private static boolean sqsVideos = false;
+	private static String rutaArchivoLock;
+	private static int timeoutCorriendo = 5;
 	
 	private static int controlParametros = 0;
 	
@@ -92,6 +94,15 @@ public class Parametros {
 		return sqsVideos;
 	}
 	
+	
+	public static String getRutaArchivoLock() {
+		return rutaArchivoLock;
+	}
+	
+	public static int getTimeoutCorriendo() {
+		return timeoutCorriendo;
+	}
+	
 	public static void setParametro(String parametro, String valor)
 	{
 		switch (parametro) {
@@ -117,7 +128,7 @@ public class Parametros {
 			break;
 		case "-rt": 
 			rutaBaseVideos = valor;
-			controlParametros |= 0x11;
+			controlParametros |= 0x20;
 			break;
 		case "-ms": 
 			mostrarSalida = valor;
@@ -166,6 +177,19 @@ public class Parametros {
 				sqsVideos = false;
 			}
 			break;
+		case "-rtlock": 
+			rutaArchivoLock = valor;
+			controlParametros |= 0x40;
+			break;
+			
+		case "-tmf": 
+			 try {
+				timeoutCorriendo = Integer.valueOf(valor);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				timeoutCorriendo = 5;
+			}
+			break;
 		default:
 			break;
 		}
@@ -176,7 +200,7 @@ public class Parametros {
 		String aca = System.getenv("NO_SQL_HOST");
 		if (aca != null)	
 			noSqlRemoto = aca.equalsIgnoreCase("remoto");
-		return(controlParametros == 0x1F);
+		return(controlParametros == 0x7F);
 	}
 	
 	public static String getListaParametros()

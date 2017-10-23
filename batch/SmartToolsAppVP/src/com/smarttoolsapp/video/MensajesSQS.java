@@ -70,6 +70,8 @@ public class MensajesSQS {
 		video.videoId = rs.get("video_id").stringValue();
 		video.sin_convertir_file_name = rs.get("file_name").stringValue();
 		video.emailUser = rs.get("emailUser").stringValue();
+		video.name = rs.get("name").stringValue();
+		video.firstNameUser = rs.get("firstNameUser").stringValue();
 		video.receiptHandle = receiptHandler;
 		
 		return(video);

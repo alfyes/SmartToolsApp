@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -14,7 +16,6 @@ import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.Executor;
 
 public class VideoConverter {
-
 	public static void main(String[] args) {
 		
 		for(int i = 0; i < args.length; i += 2 ){
@@ -22,10 +23,18 @@ public class VideoConverter {
 			Parametros.setParametro(args[i], args[i + 1]);
 		}
 		
-		if(Parametros.isNoSql())
-			iniciarConversionDynamo();
+		if(isCorriendo())
+		{
+			System.out.println("Ya esta corriendo un conversor");
+		}
 		else
-			iniciarConversionPostgres();
+		{
+			if(Parametros.isNoSql())
+				iniciarConversionDynamo();
+			else
+				iniciarConversionPostgres();
+			borrarLock();
+		}
 		
 	}
 	public static boolean convertirVideo(Video video){
@@ -126,6 +135,7 @@ public class VideoConverter {
 			
 			do{
 				continuar = false;
+				generarLock();
 				List<Video> videos = bd.consultarVideosXConvertir();
 				for(Video video: videos){
 					continuar = true;
@@ -192,7 +202,7 @@ public class VideoConverter {
 			do{
 				continuar = false;
 				List<Video> videos;
-				
+				generarLock();
 				if(Parametros.isSqsVideos())
 					 videos = sqs.consultarVideosXConvertir();
 				else
@@ -274,5 +284,58 @@ public class VideoConverter {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	static boolean isCorriendo(){
+		
+		String rutaArchivo = Parametros.getRutaArchivoLock() + File.separator + "sta.lock";
+		List<String> lineas = Archivos.leerArchivoTexto(rutaArchivo);
+		if(lineas != null)
+		{
+			long tiempo = Long.valueOf(lineas.get(0));
+			long total = Calendar.getInstance().getTimeInMillis() - tiempo;
+			
+			total /= 1000 * 60; 
+			if ((total > Parametros.getTimeoutCorriendo()) || (total < -Parametros.getTimeoutCorriendo())){
+				
+				generarLock();
+				return(false);
+			}
+		}
+		else
+		{
+			generarLock();
+			return(false);
+		}
+		return(true);
+	}
+	
+	static void generarLock()
+	{
+		String rutaArchivo = Parametros.getRutaArchivoLock() + File.separator + "sta.lock";
+		List<String> lineas = new ArrayList<String>();
+		
+		lineas.add(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+		Archivos.escribirArchivoTexto(rutaArchivo, lineas);
+	}
+	
+	static void borrarLock()
+	{
+		String rutaArchivo = Parametros.getRutaArchivoLock() + File.separator + "sta.lock";
+		List<String> lineas = Archivos.leerArchivoTexto(rutaArchivo);
+		
+		if(lineas != null)
+		{
+			try
+			{
+				File file = new File(rutaArchivo);
+				file.delete();
+			}
+			catch(Exception e)
+			{
+				
+			}
+		}
+			
 	}
 }
