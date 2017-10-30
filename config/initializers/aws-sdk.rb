@@ -2,7 +2,7 @@ require 'aws-sdk'
 
 no_sql_remoto = ENV['NO_SQL_HOST']
 
-if no_sql_remoto.nil? || no_sql_remoto.casecmp('remoto')
+if no_sql_remoto.nil? || !no_sql_remoto.casecmp?('remoto')
   Aws.config[:dynamodb] = { endpoint: 'http://localhost:8000' }
 end
 # Crea la tabla de concursos
