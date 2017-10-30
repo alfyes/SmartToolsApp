@@ -4,11 +4,11 @@ Rails.application.configure do
   # Code is not reloaded between requests.
 
   config.cache_classes = true
-  #endpoint    = "myclustercache.2achjs.0001.use2.cache.amazonaws.com:11211"
-  #elasticache = Dalli::ElastiCache.new(endpoint)
+  endpoint    = "myclustercache.2achjs.0001.use2.cache.amazonaws.com:11211"
+  elasticache = Dalli::ElastiCache.new(endpoint)
   #elasticache.set('abc',123)
 
-  #config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
+  config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers

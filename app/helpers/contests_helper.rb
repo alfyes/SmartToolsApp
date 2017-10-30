@@ -19,9 +19,11 @@ module ContestsHelper
   end
 
   def get_id_concurso(url_concurso)
-    concurso = Concurso.query(index_name: 'ConcursoXUrl',
+    Rails.cache.fetch(url_concurso, expires_in: 12.hours) do
+      concurso = Concurso.query(index_name: 'ConcursoXUrl',
                      key_condition_expression: 'concurso_url = :h',
                      expression_attribute_values: { ':h' => url_concurso }).first()
+    end
   end
 
   def delete_video(video)
