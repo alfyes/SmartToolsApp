@@ -9,6 +9,15 @@ Rails.application.configure do
   #elasticache.set('abc',123)
 
   #config.cache_store = :dalli_store, elasticache.servers, {:expires_in => 1.day, :compress => true}
+  config.cache_store = :dalli_store,
+      (ENV["MEMCACHIER_SERVERS"] || "").split(","),
+      {:username => ENV["MEMCACHIER_USERNAME"],
+       :password => ENV["MEMCACHIER_PASSWORD"],
+       :failover => true,
+       :socket_timeout => 1.5,
+       :socket_failure_delay => 0.2,
+       :down_retry_delay => 60
+      }
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
