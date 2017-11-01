@@ -69,3 +69,4 @@ gem 'aws-sdk-sqs'
 
 gem 'dalli-elasticache'
 
+gem 'rails_autoscale_agent'
